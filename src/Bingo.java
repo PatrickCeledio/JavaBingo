@@ -77,7 +77,6 @@ public class Bingo {
     }
 
     static void printBingoCard(String[] bingoCard) {
-        System.out.println();
         System.out.println("| \tB\t | \tI\t | \tN\t | \tG\t | \tO\t |\t");
         System.out.println("-------------------------------------------");
         System.out.println("| \t" + bingoCard[0] + "\t | \t"
@@ -107,19 +106,23 @@ public class Bingo {
 
     static void bingoGame (String[] bingoCard, String chance) {
 
-
         // Print Bingo Number
         System.out.println("");
-        System.out.println("New Bingo Number: " + chance);
-        System.out.println(Arrays.toString(bingoCard) + " -- length: " + bingoCard.length);
-        System.out.println(chance);
+
+        printBingoCard(bingoCard);
+        //System.out.println("New Bingo Number: " + chance);
+        //System.out.println(Arrays.toString(bingoCard) + " -- length: " + bingoCard.length);
+        //System.out.println(chance);
 
         for (int i=0; i<bingoCard.length; i++){
-            System.out.println("Comparing: " + chance + " and " + bingoCard[i]);
+            // Debug purposes
+            // System.out.println("Comparing: " + chance + " and " + bingoCard[i]);
             if (chance.equals(bingoCard[i])){
                 System.out.println("Match!");
+                System.out.println("WIN: " + chance + " and " + bingoCard[i]);
+                bingoCard[i] = "(X)";
             }else{
-                System.out.println("No match.");
+                //System.out.println("No match.");
             }
         }
     }
@@ -131,10 +134,36 @@ public class Bingo {
         // Generate and save bingo card
         final String[] userBingoCard = drawBingoCard();
 
+        // Show bingo card to user
+        printBingoCard(userBingoCard);
+
+        boolean gameFinished = false;
+        while(!gameFinished){
+            System.out.println("1. Check for matching number\n2. Exit");
+            int choice = sc.nextInt();
+            switch(choice){
+                case 1:
+                    System.out.println("Check for matching number");
+                    // Generate and save bingo number
+                    String drawnChance = drawCombo();
+
+                    // Initiate search for matching bingo number from bingo card
+                    bingoGame(userBingoCard, drawnChance);
+                    break;
+                case 2:
+                    System.out.println("Exit.");
+                    break;
+                default:
+                    System.out.printf("How did you get here?");
+                    break;
+            }
+
+        }
+
+
         // Generate and save bingo number
         String drawnChance = drawCombo();
 
-        System.out.println(drawCombo() + " and " + drawCombo() + " and " + drawCombo());
         // Initiate search for matching bingo number from bingo card
         bingoGame(userBingoCard, drawnChance);
 
