@@ -1,4 +1,5 @@
 import java.util.*;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class Bingo {
     static Scanner sc = new Scanner(System.in);
@@ -31,35 +32,35 @@ public class Bingo {
     }
 
     // Return bingo number. e.g. "B10", "G25", etc..
-    static String drawCombo() {
+    static String drawNumber() {
         int chance2 = rand.nextInt(5);
 
-        switch(chance2){
+        switch (chance2) {
             case 0:
                 int lowB = 1;
                 int highB = 10;
                 int resultNumB = rand.nextInt(highB - lowB) + lowB;
-                return "B" + String.valueOf(resultNumB);
+                return String.valueOf(resultNumB);
             case 1:
                 int lowI = 11;
                 int highI = 20;
                 int resultNumI = rand.nextInt(highI - lowI) + lowI;
-                return "I" + String.valueOf(resultNumI);
+                return String.valueOf(resultNumI);
             case 2:
                 int lowN = 21;
                 int highN = 30;
                 int resultNumN = rand.nextInt(highN - lowN) + lowN;
-                return "N" + String.valueOf(resultNumN);
+                return String.valueOf(resultNumN);
             case 3:
                 int lowG = 31;
                 int highG = 40;
                 int resultNumG = rand.nextInt(highG - lowG) + lowG;
-                return "G" + String.valueOf(resultNumG);
+                return String.valueOf(resultNumG);
             case 4:
                 int lowO = 41;
                 int highO = 50;
                 int resultNumO = rand.nextInt(highO - lowO) + lowO;
-                return "O" + String.valueOf(resultNumO);
+                return String.valueOf(resultNumO);
             default:
                 System.out.println(chance2);
                 return "How did you get here?";
@@ -69,9 +70,44 @@ public class Bingo {
     static String[] drawBingoCard() {
         String[] bingoCard = new String[20];
 
-        for (int i = 0; i < 20; i++) {
-            bingoCard[i] = drawCombo();
+        for (int i = 0; i < bingoCard.length; i++) {
+            bingoCard[i] = drawNumber();
         }
+
+
+//        System.out.println("unsorted bingoCard: " + Arrays.toString(bingoCard));
+        boolean sorted = false;
+        while (!sorted) {
+            for (int i = 0; i < bingoCard.length; i++) {
+                for (int j = i + 1; j < bingoCard.length; j++) {
+                    if (bingoCard[i].equals(bingoCard[j])) {
+//                      System.out.println("Duplicates found: " + bingoCard[i] + " and " + bingoCard[j]);
+                        String newCombo = drawNumber();
+
+                        while ((bingoCard[0].equals(newCombo) || bingoCard[1].equals(newCombo) || bingoCard[2].equals(newCombo) ||
+                               bingoCard[3].equals(newCombo) || bingoCard[4].equals(newCombo) || bingoCard[5].equals(newCombo) ||
+                                bingoCard[6].equals(newCombo) || bingoCard[7].equals(newCombo) || bingoCard[8].equals(newCombo) ||
+                                bingoCard[9].equals(newCombo) || bingoCard[10].equals(newCombo) || bingoCard[11].equals(newCombo) ||
+                                bingoCard[12].equals(newCombo) || bingoCard[13].equals(newCombo) || bingoCard[14].equals(newCombo) ||
+                                bingoCard[15].equals(newCombo) || bingoCard[16].equals(newCombo) || bingoCard[17].equals(newCombo) ||
+                                bingoCard[18].equals(newCombo) || bingoCard[19].equals(newCombo))){
+                            //System.out.println("newCombo " + newCombo);
+                            newCombo = drawNumber();
+                        }
+
+                        bingoCard[j] = newCombo;
+//                        System.out.println("New entry: " + bingoCard[i] + " and " + bingoCard[j]);
+                        sorted = false;
+                    } else {
+//                        System.out.println("No match.");
+                        sorted = false;
+                    }
+                }
+            }
+            sorted = true;
+        }
+
+//        System.out.println("sorted bingoCard: " + Arrays.toString(bingoCard));
 
         return bingoCard;
     }
@@ -102,9 +138,11 @@ public class Bingo {
                 + bingoCard[17] + "\t | \t"
                 + bingoCard[18] + "\t | \t"
                 + bingoCard[19] + "\t |\t");
+
+        HashMap<String, String> bingoCardMap = new HashMap<>();
     }
 
-    static void bingoGame (String[] bingoCard, String chance) {
+    static void bingoGame(String[] bingoCard, String chance) {
 
         // Print Bingo Number
         System.out.println("");
@@ -114,14 +152,14 @@ public class Bingo {
         //System.out.println(Arrays.toString(bingoCard) + " -- length: " + bingoCard.length);
         //System.out.println(chance);
 
-        for (int i=0; i<bingoCard.length; i++){
+        for (int i = 0; i < bingoCard.length; i++) {
             // Debug purposes
             // System.out.println("Comparing: " + chance + " and " + bingoCard[i]);
-            if (chance.equals(bingoCard[i])){
+            if (chance.equals(bingoCard[i])) {
                 System.out.println("Match!");
                 System.out.println("WIN: " + chance + " and " + bingoCard[i]);
                 bingoCard[i] = "(X)";
-            }else{
+            } else {
                 //System.out.println("No match.");
             }
         }
@@ -138,20 +176,23 @@ public class Bingo {
         printBingoCard(userBingoCard);
 
         boolean gameFinished = false;
-        while(!gameFinished){
-            System.out.println("1. Check for matching number\n2. Exit");
+
+        while (!gameFinished) {
+            System.out.println("\n1. Check for matching number\n2. Exit");
             int choice = sc.nextInt();
-            switch(choice){
+            switch (choice) {
                 case 1:
-                    System.out.println("Check for matching number");
                     // Generate and save bingo number
-                    String drawnChance = drawCombo();
+                    String drawnChance = drawNumber();
+
+                    System.out.println("Checking for matching number: " + drawnChance);
 
                     // Initiate search for matching bingo number from bingo card
                     bingoGame(userBingoCard, drawnChance);
                     break;
                 case 2:
-                    System.out.println("Exit.");
+                    System.out.println("Thanks for playing!");
+                    menuPrompt();
                     break;
                 default:
                     System.out.printf("How did you get here?");
@@ -162,7 +203,7 @@ public class Bingo {
 
 
         // Generate and save bingo number
-        String drawnChance = drawCombo();
+        String drawnChance = drawNumber();
 
         // Initiate search for matching bingo number from bingo card
         bingoGame(userBingoCard, drawnChance);
@@ -170,7 +211,6 @@ public class Bingo {
         // Print Bingo Card
         printBingoCard(userBingoCard);
         System.out.println("Draw new bingo number");
-
 
 
     }
