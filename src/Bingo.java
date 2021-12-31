@@ -5,7 +5,7 @@ public class Bingo {
     static Random rand = new Random();
 
     static void menuPrompt() {
-        System.out.println("Welcome to Bingo\nPlease select an option.\nOptions:\n1. Play\n2. Rules\n3. Credits");
+        System.out.println("Welcome to Bingo\nPlease select an option.\nOptions:\n1. Play\n2. Rules\n3. Credits\n4. Debug");
         int choice = sc.nextInt();
         switch (choice) {
             case 1:
@@ -20,6 +20,9 @@ public class Bingo {
                 credits();
                 menuPrompt();
                 break;
+            case 4:
+                menuPrompt();
+                break;
             default:
                 System.out.println("Please enter a number between 1-3 according to your desired selection.");
                 menuPrompt();
@@ -27,35 +30,47 @@ public class Bingo {
         }
     }
 
+    // Return bingo number. e.g. "B10", "G25", etc..
     static String drawCombo() {
-        String bingo = "BINGO";
-        char resultLetter = bingo.charAt(rand.nextInt(5));
+        int chance2 = rand.nextInt(5);
 
-        int low = 1;
-        int high = 50;
-        int resultNum = rand.nextInt(high - low) + low;
-
-        String chance = resultLetter + String.valueOf(resultNum);
-        System.out.println("Computer drew: " + chance);
-
-        return chance;
+        switch(chance2){
+            case 0:
+                int lowB = 1;
+                int highB = 10;
+                int resultNumB = rand.nextInt(highB - lowB) + lowB;
+                return "B" + String.valueOf(resultNumB);
+            case 1:
+                int lowI = 11;
+                int highI = 20;
+                int resultNumI = rand.nextInt(highI - lowI) + lowI;
+                return "I" + String.valueOf(resultNumI);
+            case 2:
+                int lowN = 21;
+                int highN = 30;
+                int resultNumN = rand.nextInt(highN - lowN) + lowN;
+                return "N" + String.valueOf(resultNumN);
+            case 3:
+                int lowG = 31;
+                int highG = 40;
+                int resultNumG = rand.nextInt(highG - lowG) + lowG;
+                return "G" + String.valueOf(resultNumG);
+            case 4:
+                int lowO = 41;
+                int highO = 50;
+                int resultNumO = rand.nextInt(highO - lowO) + lowO;
+                return "O" + String.valueOf(resultNumO);
+            default:
+                System.out.println(chance2);
+                return "How did you get here?";
+        }
     }
 
     static String[] drawBingoCard() {
-        String bingo = "BINGO";
-        char resultLetter = bingo.charAt(rand.nextInt(5));
-
-        int low = 1;
-        int high = 50;
-        int resultNum = rand.nextInt(high - low) + low;
-
         String[] bingoCard = new String[20];
 
         for (int i = 0; i < 20; i++) {
-            Integer number = rand.nextInt((high - low) + low);
-            char letter = bingo.charAt(rand.nextInt(5));
-            String combo = letter + String.valueOf(number);
-            bingoCard[i] = combo;
+            bingoCard[i] = drawCombo();
         }
 
         return bingoCard;
@@ -90,6 +105,25 @@ public class Bingo {
                 + bingoCard[19] + "\t |\t");
     }
 
+    static void bingoGame (String[] bingoCard, String chance) {
+
+
+        // Print Bingo Number
+        System.out.println("");
+        System.out.println("New Bingo Number: " + chance);
+        System.out.println(Arrays.toString(bingoCard) + " -- length: " + bingoCard.length);
+        System.out.println(chance);
+
+        for (int i=0; i<bingoCard.length; i++){
+            System.out.println("Comparing: " + chance + " and " + bingoCard[i]);
+            if (chance.equals(bingoCard[i])){
+                System.out.println("Match!");
+            }else{
+                System.out.println("No match.");
+            }
+        }
+    }
+
     static void play() {
         clearConsole();
         System.out.println("Play");
@@ -100,11 +134,15 @@ public class Bingo {
         // Generate and save bingo number
         String drawnChance = drawCombo();
 
-        printBingoCard(userBingoCard);
+        System.out.println(drawCombo() + " and " + drawCombo() + " and " + drawCombo());
+        // Initiate search for matching bingo number from bingo card
+        bingoGame(userBingoCard, drawnChance);
 
-//        while(true){
-//            if ()
-//        }
+        // Print Bingo Card
+        printBingoCard(userBingoCard);
+        System.out.println("Draw new bingo number");
+
+
 
     }
 
