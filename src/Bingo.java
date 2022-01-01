@@ -1,5 +1,4 @@
 import java.util.*;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class Bingo {
     static Scanner sc = new Scanner(System.in);
@@ -139,30 +138,46 @@ public class Bingo {
                 + bingoCard[18] + "\t | \t"
                 + bingoCard[19] + "\t |\t");
 
-        HashMap<String, String> bingoCardMap = new HashMap<>();
+
     }
 
-    static void bingoGame(String[] bingoCard, String chance) {
+
+    static void bingoGame(HashMap<String, String> userBingoCardMap, char drawnLetter, String drawnNumber) {
 
         // Print Bingo Number
         System.out.println("");
 
-        printBingoCard(bingoCard);
         //System.out.println("New Bingo Number: " + chance);
         //System.out.println(Arrays.toString(bingoCard) + " -- length: " + bingoCard.length);
         //System.out.println(chance);
 
-        for (int i = 0; i < bingoCard.length; i++) {
-            // Debug purposes
-            // System.out.println("Comparing: " + chance + " and " + bingoCard[i]);
-            if (chance.equals(bingoCard[i])) {
-                System.out.println("Match!");
-                System.out.println("WIN: " + chance + " and " + bingoCard[i]);
-                bingoCard[i] = "(X)";
-            } else {
-                //System.out.println("No match.");
-            }
-        }
+
+    }
+
+    static HashMap<String, String> bingoCardToMap (String[] bingoCard){
+        HashMap<String, String> bingoCardMap = new HashMap<>();
+        bingoCardMap.put(bingoCard[0], "B");
+        bingoCardMap.put(bingoCard[5], "B");
+        bingoCardMap.put(bingoCard[10], "B");
+        bingoCardMap.put(bingoCard[15], "B");
+        bingoCardMap.put(bingoCard[1], "I");
+        bingoCardMap.put(bingoCard[6], "I");
+        bingoCardMap.put(bingoCard[11], "I");
+        bingoCardMap.put(bingoCard[16], "I");
+        bingoCardMap.put(bingoCard[2], "N");
+        bingoCardMap.put(bingoCard[7], "N");
+        bingoCardMap.put(bingoCard[12], "N");
+        bingoCardMap.put(bingoCard[17], "N");
+        bingoCardMap.put(bingoCard[3], "G");
+        bingoCardMap.put(bingoCard[8], "G");
+        bingoCardMap.put(bingoCard[13], "G");
+        bingoCardMap.put(bingoCard[18], "G");
+        bingoCardMap.put(bingoCard[4], "O");
+        bingoCardMap.put(bingoCard[9], "O");
+        bingoCardMap.put(bingoCard[14], "O");
+        bingoCardMap.put(bingoCard[19], "O");
+
+        return bingoCardMap;
     }
 
     static void play() {
@@ -171,10 +186,10 @@ public class Bingo {
 
         // Generate and save bingo card
         final String[] userBingoCard = drawBingoCard();
+        System.out.println("Bingo card numbers: " + Arrays.toString(userBingoCard));
 
         // Show bingo card to user
         printBingoCard(userBingoCard);
-
         boolean gameFinished = false;
 
         while (!gameFinished) {
@@ -182,13 +197,23 @@ public class Bingo {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    // Generate and save bingo number
-                    String drawnChance = drawNumber();
+                    // Generate and save bingo letter
+                    String bingo = "BINGO";
+                    char drawnLetter = bingo.charAt(rand.nextInt(5));
 
-                    System.out.println("Checking for matching number: " + drawnChance);
+                    // Generate and save bingo number
+                    String drawnNumber = drawNumber();
+
+                    // Print bingo card
+                    printBingoCard(userBingoCard);
+
+                    HashMap<String, String> userBingoCardMap = bingoCardToMap(userBingoCard);
+                    System.out.println(userBingoCardMap);
+
+                    System.out.println("Checking for matching number: " + drawnLetter + drawnNumber);
 
                     // Initiate search for matching bingo number from bingo card
-                    bingoGame(userBingoCard, drawnChance);
+                    bingoGame(userBingoCardMap, drawnLetter, drawnNumber);
                     break;
                 case 2:
                     System.out.println("Thanks for playing!");
@@ -200,18 +225,6 @@ public class Bingo {
             }
 
         }
-
-
-        // Generate and save bingo number
-        String drawnChance = drawNumber();
-
-        // Initiate search for matching bingo number from bingo card
-        bingoGame(userBingoCard, drawnChance);
-
-        // Print Bingo Card
-        printBingoCard(userBingoCard);
-        System.out.println("Draw new bingo number");
-
 
     }
 
