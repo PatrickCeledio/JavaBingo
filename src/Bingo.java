@@ -142,7 +142,7 @@ public class Bingo {
     }
 
 
-    static void bingoGame(HashMap<String, String> userBingoCardMap, char drawnLetter, String drawnNumber) {
+    static void bingoGame(String[] userBingoCard, HashMap<String, String> userBingoCardMap, char drawnLetter, String drawnNumber) {
 
         // Print Bingo Number
         System.out.println("");
@@ -151,7 +151,43 @@ public class Bingo {
         //System.out.println(Arrays.toString(bingoCard) + " -- length: " + bingoCard.length);
         //System.out.println(chance);
 
+        System.out.println(userBingoCardMap.get(userBingoCard[0]));
+        System.out.println(userBingoCardMap.get(userBingoCard[1]));
+        System.out.println(userBingoCardMap.get(userBingoCard[2]));
+        System.out.println(userBingoCardMap.get(userBingoCard[3]));
+        System.out.println(userBingoCardMap.get(userBingoCard[4]));
+        System.out.println(userBingoCardMap.values());
+        System.out.println(Arrays.toString(userBingoCard));
+        switch(drawnLetter){
+            case 'B':
+                System.out.println("Drawn letter is : " + drawnLetter);
+                System.out.println("B");
+                for (int i = 0; i< userBingoCard.length; i++) {
+                    if (userBingoCard[i] == drawnNumber)
+                }
+                break;
+            case 'I':
 
+                System.out.println("Drawn letter is : " + drawnLetter);
+                System.out.println("I");
+                break;
+            case 'N':
+
+                System.out.println("Drawn letter is : " + drawnLetter);
+                System.out.println("N");
+                break;
+            case 'G':
+
+                System.out.println("Drawn letter is : " + drawnLetter);
+                System.out.println("G");
+                break;
+            case 'O':
+
+                System.out.println("Drawn letter is : " + drawnLetter);
+                System.out.println("O");
+                break;
+
+        }
     }
 
     static HashMap<String, String> bingoCardToMap (String[] bingoCard){
@@ -208,12 +244,12 @@ public class Bingo {
                     printBingoCard(userBingoCard);
 
                     HashMap<String, String> userBingoCardMap = bingoCardToMap(userBingoCard);
-                    System.out.println(userBingoCardMap);
+                    System.out.println("Map of bingo card: " + userBingoCardMap);
 
                     System.out.println("Checking for matching number: " + drawnLetter + drawnNumber);
 
                     // Initiate search for matching bingo number from bingo card
-                    bingoGame(userBingoCardMap, drawnLetter, drawnNumber);
+                    bingoGame(userBingoCard, userBingoCardMap, drawnLetter, drawnNumber);
                     break;
                 case 2:
                     System.out.println("Thanks for playing!");
