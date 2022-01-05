@@ -157,34 +157,67 @@ public class Bingo {
         System.out.println(userBingoCardMap.get(userBingoCard[3]));
         System.out.println(userBingoCardMap.get(userBingoCard[4]));
         System.out.println(userBingoCardMap.values());
-        System.out.println(Arrays.toString(userBingoCard));
+        System.out.println("userBingoCard" + Arrays.toString(userBingoCard));
+        System.out.println("drawnNumber: " + drawnNumber);
         switch(drawnLetter){
             case 'B':
                 System.out.println("Drawn letter is : " + drawnLetter);
                 System.out.println("B");
                 for (int i = 0; i< userBingoCard.length; i++) {
-                    if (userBingoCard[i] == drawnNumber)
+                    System.out.println("Keys: " +  userBingoCard[i]); // Number
+                    System.out.println("Values: " + userBingoCardMap.get(userBingoCard[i])); // Letter from "BINGO"
+                    System.out.println("Comparing: " + userBingoCardMap.get(userBingoCard[i]) + userBingoCard[i] + " and "
+                            + drawnLetter + drawnNumber) ;
+                    System.out.println(userBingoCardMap.get(userBingoCard[i]));
                 }
                 break;
             case 'I':
 
                 System.out.println("Drawn letter is : " + drawnLetter);
                 System.out.println("I");
+                for (int i = 0; i< userBingoCard.length; i++) {
+                    System.out.println(userBingoCard[i]);
+//                    if (userBingoCard[i] == drawnNumber)
+                    System.out.println("Comparing: " + userBingoCardMap.get(userBingoCard[i]) + userBingoCard[i] + " and "
+                            + drawnLetter + drawnNumber) ;
+                    System.out.println(userBingoCardMap.get(userBingoCard[i]));
+                }
                 break;
             case 'N':
 
                 System.out.println("Drawn letter is : " + drawnLetter);
                 System.out.println("N");
+                for (int i = 0; i< userBingoCard.length; i++) {
+                    System.out.println(userBingoCard[i]);
+//                    if (userBingoCard[i] == drawnNumber)
+                    System.out.println("Comparing: " + userBingoCardMap.get(userBingoCard[i]) + userBingoCard[i] + " and "
+                            + drawnLetter + drawnNumber) ;
+                    System.out.println(userBingoCardMap.get(userBingoCard[i]));
+                }
                 break;
             case 'G':
 
                 System.out.println("Drawn letter is : " + drawnLetter);
                 System.out.println("G");
+                for (int i = 0; i< userBingoCard.length; i++) {
+                    System.out.println(userBingoCard[i]);
+//                    if (userBingoCard[i] == drawnNumber)
+                    System.out.println("Comparing: " + userBingoCardMap.get(userBingoCard[i]) + userBingoCard[i] + " and "
+                            + drawnLetter + drawnNumber) ;
+                    System.out.println(userBingoCardMap.get(userBingoCard[i]));
+                }
                 break;
             case 'O':
 
                 System.out.println("Drawn letter is : " + drawnLetter);
                 System.out.println("O");
+                for (int i = 0; i< userBingoCard.length; i++) {
+                    System.out.println(userBingoCard[i]);
+//                    if (userBingoCard[i] == drawnNumber)
+                    System.out.println("Comparing: " + userBingoCardMap.get(userBingoCard[i]) + userBingoCard[i] + " and "
+                            + drawnLetter + drawnNumber) ;
+                    System.out.println(userBingoCardMap.get(userBingoCard[i]));
+                }
                 break;
 
         }
